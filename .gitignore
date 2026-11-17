@@ -6,3 +6,7 @@
 duck_runs/
 .venv/
 __pycache__/
+
+# CAD 建置產物
+hardware/cad/build/
+__pycache__/
