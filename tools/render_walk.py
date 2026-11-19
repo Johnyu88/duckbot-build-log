@@ -11,10 +11,11 @@ p = argparse.ArgumentParser()
 p.add_argument("-o", "--onnx_model_path", required=True)
 p.add_argument("--out", default="walk.mp4")
 p.add_argument("--seconds", type=float, default=14.0)
+p.add_argument("--scene", default="playground/open_duck_mini_v2/xmls/scene_flat_terrain.xml")
 a = p.parse_args()
 
 m = MjInfer(
-    "playground/open_duck_mini_v2/xmls/scene_flat_terrain.xml",
+    a.scene,
     "playground/open_duck_mini_v2/data/polynomial_coefficients.pkl",
     a.onnx_model_path,
     False,
@@ -33,6 +34,7 @@ def cmd(t):
         return [0, 0, 1.0]
     return [0, 0, 0]
 
+peak = np.zeros(m.model.nu)
 frames, n_ctrl = [], int(a.seconds / (m.sim_dt * m.decimation))
 for k in range(n_ctrl):
     t = k * m.sim_dt * m.decimation
@@ -55,6 +57,7 @@ for k in range(n_ctrl):
     m.data.ctrl = tg.copy()
     for _ in range(m.decimation):
         mujoco.mj_step(m.model, m.data)
+        peak = np.maximum(peak, np.abs(m.data.actuator_force))
     if k % 2 == 0:
         r.update_scene(m.data, camera=cam)
         frames.append(r.render().copy())
@@ -71,3 +74,7 @@ except Exception as e:
     ims = [Image.fromarray(f) for f in frames]
     ims[0].save(a.out, save_all=True, append_images=ims[1:], duration=40, loop=0)
 print("已輸出：", a.out)
+print("\n各關節模擬中的最大力矩 (N·m；STS3215 7.4V 規格堵轉 1.91)：")
+for i in range(m.model.nu):
+    print(f"  {mujoco.mj_id2name(m.model, mujoco.mjtObj.mjOBJ_ACTUATOR, i):16s} {peak[i]:.2f}")
+print("最大值：", round(float(peak.max()), 2))
