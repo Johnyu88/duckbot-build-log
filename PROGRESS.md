@@ -26,7 +26,7 @@
 ## 日誌（新的放最上面）
 
 ### 2026-11-19
-- 新增 docs/08：Open Duck Mini 與 HD-1910 Microduck 復刻比較（零件、功能、手機 APK、風險）。HD-1910 版軟體較完整但要買兩塊自製板、真機驗證少；主線尚未決定。Open Duck 3 億步訓練（flat_terrain_backlash）已開跑。
+- 新增 docs/08：Open Duck Mini 與 HD-1910 Microduck 復刻比較（零件、功能、手機 APK、風險）。HD-1910 版軟體較完整但要買兩塊自製板、真機驗證少；**決定：Open Duck Mini（A，先做）與 HD-1910 Microduck 復刻（B，後做）當作兩台機器人，不是二選一。**Open Duck 3 億步訓練（flat_terrain_backlash）已開跑。
 - 割草機：新增 hardware/mower/（規格 v0、系統分解、參考設計對照）。參考資料多為搜尋摘要，尚未驗證；階梯在邊界外；先用手機當大腦加 MCU 當安全層；無人機勘查與車載無人機列為後期階段。
 - 新增 docs/07-intent-interface.md：共同意圖介面草案 v0（move/stop/enable/pose/do/health/subscribe 加 goto/dock/lease），尚未實作。
 - 新增 docs/06-microduck-runtime-reference.md：讀 Microduck 機上軟體（robotd/btd/mediad/autod/mapd），整理可借用到 Open Duck 與無人車的設計；官方建圖只做二維、ToF 是「手杖」，支持建圖交給無人車的決定。
