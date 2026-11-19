@@ -35,6 +35,8 @@ def cmd(t):
     return [0, 0, 0]
 
 peak = np.zeros(m.model.nu)
+sum_abs = np.zeros(m.model.nu); sat = np.zeros(m.model.nu); n_steps = 0
+cap = float(np.max(m.model.actuator_forcerange[:, 1]))
 frames, n_ctrl = [], int(a.seconds / (m.sim_dt * m.decimation))
 for k in range(n_ctrl):
     t = k * m.sim_dt * m.decimation
@@ -57,7 +59,8 @@ for k in range(n_ctrl):
     m.data.ctrl = tg.copy()
     for _ in range(m.decimation):
         mujoco.mj_step(m.model, m.data)
-        peak = np.maximum(peak, np.abs(m.data.actuator_force))
+        f = np.abs(m.data.actuator_force)
+        peak = np.maximum(peak, f); sum_abs += f; sat += (f >= 0.98 * cap); n_steps += 1
     if k % 2 == 0:
         r.update_scene(m.data, camera=cam)
         frames.append(r.render().copy())
@@ -76,5 +79,5 @@ except Exception as e:
 print("已輸出：", a.out)
 print("\n各關節模擬中的最大力矩 (N·m；STS3215 7.4V 規格堵轉 1.91)：")
 for i in range(m.model.nu):
-    print(f"  {mujoco.mj_id2name(m.model, mujoco.mjtObj.mjOBJ_ACTUATOR, i):16s} {peak[i]:.2f}")
+    print(f"  {mujoco.mj_id2name(m.model, mujoco.mjtObj.mjOBJ_ACTUATOR, i):16s} 最大 {peak[i]:.2f}  平均 {sum_abs[i]/n_steps:.2f}  頂到上限的時間 {100*sat[i]/n_steps:4.1f}%")
 print("最大值：", round(float(peak.max()), 2))
