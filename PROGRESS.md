@@ -26,6 +26,7 @@
 ## 日誌（新的放最上面）
 
 ### 2026-11-19
+- 割草機：新增 hardware/mower/（規格 v0、系統分解、參考設計對照）。參考資料多為搜尋摘要，尚未驗證；階梯在邊界外；先用手機當大腦加 MCU 當安全層；無人機勘查與車載無人機列為後期階段。
 - 新增 docs/07-intent-interface.md：共同意圖介面草案 v0（move/stop/enable/pose/do/health/subscribe 加 goto/dock/lease），尚未實作。
 - 新增 docs/06-microduck-runtime-reference.md：讀 Microduck 機上軟體（robotd/btd/mediad/autod/mapd），整理可借用到 Open Duck 與無人車的設計；官方建圖只做二維、ToF 是「手杖」，支持建圖交給無人車的決定。
 - Microduck 模擬訓練（4096 環境）跑約 18 小時後手動停止，跌倒率降到 0.21；載入 checkpoint 在模擬檢視器中站穩 2700 步以上沒跌倒。啟用 GPU 繪圖後檢視器從 2 FPS 提升到約 26 FPS。
