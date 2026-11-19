@@ -16,3 +16,6 @@
 
 ## 我們自己的修改
 把自己改過的檔案放在 `hardware/ours/`，並註明基於哪個原始版本。
+
+## 我們自己的 CAD（CadQuery）
+統一用程式碼設計，規則與用法見 `hardware/cad/README.md`；印表機公差與校正見 `hardware/printers/README.md`。
