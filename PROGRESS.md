@@ -30,7 +30,7 @@
 - 新增 docs/07-intent-interface.md：共同意圖介面草案 v0（move/stop/enable/pose/do/health/subscribe 加 goto/dock/lease），尚未實作。
 - 新增 docs/06-microduck-runtime-reference.md：讀 Microduck 機上軟體（robotd/btd/mediad/autod/mapd），整理可借用到 Open Duck 與無人車的設計；官方建圖只做二維、ToF 是「手杖」，支持建圖交給無人車的決定。
 - Microduck 模擬訓練（4096 環境）跑約 18 小時後手動停止，跌倒率降到 0.21；載入 checkpoint 在模擬檢視器中站穩 2700 步以上沒跌倒。啟用 GPU 繪圖後檢視器從 2 FPS 提升到約 26 FPS。
-- ONNX 匯出成功；CPU 演練腳本中指令 0.4 可前進約 0.24 m/s（會踏步不跌倒），指令 0.2 仍站著。待續訓改善。細節見 docs/05-training.md。
+- ONNX 匯出成功；用最新檢查點（約 46,750 輪）重測：指令 0.2 站著、0.3 約 0.17、0.4 約 0.24 m/s。這與官方 walk「約 0.6 倍指令」的已知特性一致，不需續訓。Microduck 模擬線的目標（跑通訓練→匯出→載入→前進）已達成。細節見 docs/05-training.md。
 - 新增 docs/00-vision-roadmap.md：願景、本體加遠端大腦架構、階段路線圖（小鴨為學習平台，巡邏與建圖由無人車承擔）。
 
 ### 2026-11-18
